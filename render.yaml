@@ -1,22 +1,13 @@
 databases:
-  - name: mysitedb
+  - name: pages_projectdb
     plan: free
-    databaseName: mysite
-    user: mysite
+    databaseName:
+    user: pages_project
 
 services:
   - type: web
     plan: free
-    name: mysite
+    name: pages_project
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
-    envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: mysitedb
-          property: connectionString
-      - key: SECRET_KEY
-        generateValue: true
-      - key: WEB_CONCURRENCY
-        value: 4
+    startCommand: "python -m gunicorn pages_project.asgi:application -k uvicorn.workers.UvicornWorker"
